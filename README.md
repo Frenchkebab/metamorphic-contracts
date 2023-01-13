@@ -95,13 +95,13 @@ this function will deploy a bytecode contract above and this will copy the code 
 8. Call `success` with **`Child2`**'s address.
 
 ```
-                (2) create2              (3) create
-  (1) Factory ----------------> Parent ----------------> Child1
-                                 (5)                      (5)
+                 2. create2               3. create
+   1. Factory ----------------> Parent ----------------> Child1
+                                  5.                       5.
 ```
 
 ```
-                (6) create2              (7) create
+                 6. create2               7. create
       Factory ----------------> Parent ----------------> Child2
 ```
 
