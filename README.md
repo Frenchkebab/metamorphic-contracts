@@ -102,7 +102,7 @@ this function will deploy a bytecode contract above and this will copy the code 
 
 ```
                 (6) create2              (7) create
-  (1) Factory ----------------> Parent ----------------> Child2
+      Factory ----------------> Parent ----------------> Child2
 ```
 
 **`Parent`** has same address when redeployed since we use same **bytecode** and **salt** for `create2`.
