@@ -10,7 +10,41 @@
 
 `$ npm install`
 
-## [1] StrangeV4 Challenge
+## [1] Exploit Constructor
+
+`$ npx hardhat test test/ExploitConstructor/ExploitConstructor.test.js`
+
+```solidity
+contract ContractThatDoesNotDoWhatItLooksLike {
+  bytes public _bytecode;
+
+  constructor(uint256 bytecodeLength, bytes memory bytecode) {
+    assembly {
+      /*
+                < memory >
+                0x80: bytecodeLength (parameter)
+                0xa0: bytecode location
+                0xc0: bytecode length
+                0xe0: bytecode
+                ...
+            */
+      return(0xe0, bytecodeLength)
+    }
+  }
+
+  function add1(uint256 x) external pure returns (uint256) {
+    return x + 1; // returns x + 2;
+  }
+}
+```
+
+**`ContractThatDoesNotDoWhatItLooksLike`** actually deploys different contract than what it looks like.
+
+In it's `constructor`, it does so by returning the bytecode passed in as an argument.
+
+See [How to Exploit a Solidity Constructor](https://hackernoon.com/how-to-exploit-a-solidity-constructor) for more detailed explanation.
+
+## [2] StrangeV4 Challenge
 
 ```solidity
 pragma solidity 0.8.16;
@@ -49,6 +83,8 @@ contract StrangeV4 {
 - **`Condition1`**: `_contract` must be a contract
 - **`Condition2`**: `_contract` must have same address as `strangeContract` (previous `_contract`)
 - **`Condition3`**: `codeHash` of `_contract` must be different from `strangeContract`'s `codeHash`
+
+<br>
 
 > To pass require conditions in `success` success function after calling `initialize`, you must deploy a contract that has same contract address with different code
 
@@ -94,25 +130,35 @@ this function will deploy a bytecode contract above and this will copy the code 
 7. Deploy **`Child2`** from **`Parent`**.
 8. Call `success` with **`Child2`**'s address.
 
+<br>
+
 ```
                  2. create2               3. create
    1. Factory ----------------> Parent ----------------> Child1
                                   5.                       5.
 ```
 
+<br>
+
 ```
                  6. create2               7. create
       Factory ----------------> Parent ----------------> Child2
 ```
 
+<br>
+
 **`Parent`** has same address when redeployed since we use same **bytecode** and **salt** for `create2`.
 
 But how can **`Child1`** and **`Child2`** have same address?
 
-When you use `create` there is two factors that determines the address:
+<br>
+
+There is two factors that determines the address When you use `create` :
 
 1. `sender`
 2. `nonce`
+
+<br>
 
 If you `selfdestruct` **`Parent`** contract, its `nonce` is reset to `0`.
 So when you deploy **`Child2`**, it will have the very same address as when **`Child1`** was deployed.
