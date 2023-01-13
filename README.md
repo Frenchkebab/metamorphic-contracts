@@ -83,7 +83,7 @@ this function will deploy a bytecode contract above and this will copy the code 
 
 `$ npx hardhat test test/StrangeV4/StrangeV4-solution2.test.js`
 
-> Checkout this repository of better understanding
+> Checkout [this repository](https://github.com/Frenchkebab/create2)
 
 1. Deploy **`Factory`** contract
 2. Deploy **`Parent`** from **`Factory`** using `create2`
