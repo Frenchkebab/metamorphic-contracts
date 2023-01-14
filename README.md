@@ -21,13 +21,13 @@ contract ContractThatDoesNotDoWhatItLooksLike {
   constructor(uint256 bytecodeLength, bytes memory bytecode) {
     assembly {
       /*
-                < memory >
-                0x80: bytecodeLength (parameter)
-                0xa0: bytecode location
-                0xc0: bytecode length
-                0xe0: bytecode
-                ...
-            */
+            < memory >
+            0x80: bytecodeLength (parameter)
+            0xa0: bytecode location
+            0xc0: bytecode length
+            0xe0: bytecode
+            ...
+        */
       return(0xe0, bytecodeLength)
     }
   }
