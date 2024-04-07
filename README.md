@@ -4,15 +4,22 @@
 
 ### 1) Clone repository
 
-`$ git clone https://github.com/Frenchkebab/metamorphic-contracts.git`
+```
+git clone https://github.com/Frenchkebab/metamorphic-contracts.git
+cd metamorphic-contracts
+```
 
 ### 2) Install dependencies
 
-`$ npm install`
+```
+npm install
+```
 
 ## [1] Exploit Constructor
 
-`$ npx hardhat test test/ExploitConstructor/ExploitConstructor.test.js`
+```
+npx hardhat test test/ExploitConstructor/ExploitConstructor.test.js
+```
 
 ```solidity
 contract ContractThatDoesNotDoWhatItLooksLike {
